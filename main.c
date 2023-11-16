@@ -52,6 +52,20 @@ void test7() {
     }
 }
 
+void test8(){
+    char* str = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:";
+    char* result = base45_encode(str, strlen(str));
+    printf("%s\n", result);
+    char* decoded = base45_decode(result, strlen(result));
+    printf("%s\n", decoded);
+
+    if(strcmp(str, decoded) == 0) {
+        printf("Test 8 passed\n");
+    } else {
+        printf("Test 8 failed\n");
+    }
+}
+
 int main() {
     test1();
     test2();
@@ -60,5 +74,6 @@ int main() {
     test5();
     test6();
     test7();
+    test8();
     return 0;
 }

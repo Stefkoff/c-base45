@@ -12,11 +12,11 @@
 
 const char base46encodingTable[BASE46_SIZE] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:";
 const char base46valueTable[BASE46_SIZE]= {
-        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
-        'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
-        'U', 'V', 'W', 'X', 'Y', 'Z', ' ', '$', '%', '*',
-        '+', '-', '.', '/', ':'
+        0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39,
+        0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x47, 0x48, 0x49, 0x4A,
+        0x4B, 0x4C, 0x4D, 0x4E, 0x4F, 0x50, 0x51, 0x52, 0x53, 0x54,
+        0x55, 0x56, 0x57, 0x58, 0x59, 0x5A, 0x20, 0x24, 0x25, 0x2A,
+        0x2B, 0x2D, 0x2E, 0x2F, 0x3A
 };
 
 int* base45_encode2(int input) {
@@ -25,7 +25,7 @@ int* base45_encode2(int input) {
     int c, d;
     for(c = 0; c < BASE46_SIZE; c++) {
         for(d = 0; d < BASE46_SIZE; d++) {
-            int x = (c + (45 * d));
+            int x = (c + (BASE46_SIZE * d));
             if(x == desired) {
                 result[0] = c;
                 result[1] = d;
@@ -43,7 +43,7 @@ int* base45_encode3(int input) {
     for(c = 0; c < BASE46_SIZE; c++) {
         for(d = 0; d < BASE46_SIZE; d++) {
             for(e = 0; e < BASE46_SIZE; e++) {
-                int x = (c + (45 * d) + (45 * 45 * e));
+                int x = (c + (BASE46_SIZE * d) + (BASE46_SIZE * BASE46_SIZE * e));
                 if(x == input) {
                     result[0] = c;
                     result[1] = d;
@@ -59,12 +59,12 @@ int* base45_encode3(int input) {
 
 int base45_decode3(int c, int d, int e) {
     static char result[3];
-    return c + (45 * d) + (45 * 45 * e);
+    return c + (BASE46_SIZE * d) + (BASE46_SIZE * BASE46_SIZE * e);
 }
 
 int base45_decode2(int c, int d) {
     static char result[2];
-    return c + (45 * d);
+    return c + (BASE46_SIZE * d);
 }
 
 int findIndex(char c) {
